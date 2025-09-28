@@ -67,8 +67,12 @@ read -rp "Какая цель у сервера:
 echo $slash
 case $i in
 	1) echo -e "Настройка Nginx (frontend)\n$slash"
+	echo "Копирование конфигурации сети..."
 	sudo cp -r ~/otus_project/FILES/netplan/50-cloud-init.yaml /etc/netplan/
-	
+	sleep 1s
+	echo "Копирование конфигурации nginx..."
+	sudo cp -r ~/otus_project/FILES/nginx/default /etc/nginx/sites-available/
+	sleep 1s
 	;;
 	2) echo -e "Настройка Apache2 (backend)\n$slash"
 	;;
