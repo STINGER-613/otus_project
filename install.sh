@@ -67,9 +67,9 @@ read -rp "Какая цель у сервера:
 echo $slash
 case $i in
 	1) echo -e "Настройка Nginx (frontend)\n$slash"
-        echo "Копирование конфигурации сети..."
-        sudo cp -r ~/otus_project/FILES/netplan/50-cloud-init.yaml /etc/netplan/
-        sleep 1s
+	echo "Копирование конфигурации сети..."
+	sudo cp -r ~/otus_project/FILES/netplan/50-cloud-init.yaml /etc/netplan/
+	sleep 1s
 	read -rp "Присвоить IP сервера > " q
 	sudo sed -i "6s/ip/$(echo $q)/g" /etc/netplan/50-cloud-init.yaml
 	sleep 1s
@@ -82,20 +82,20 @@ case $i in
 	;;
 
 	2) echo -e "Настройка Apache2 (backend)\n$slash"
-        echo "Копирование конфигурации сети..."
-        sudo cp -r ~/otus_project/FILES/netplan/50-cloud-init.yaml /etc/netplan/
-        sleep 1s
-        read -rp "Присвоить IP сервера > " q
-        sudo sed -i "6s/ip/$(echo $q)/g" /etc/netplan/50-cloud-init.yaml
-        sleep 1s
-        echo "Копирование конфигурации Apache2 и стартовой страници..."
-        sudo cp -r ~/otus_project/FILES/apache2/000-default.conf /etc/apache2/sites-available/
-        sudo cp -r ~/otus_project/FILES/apache2/index.html /var/www/html/
+	echo "Копирование конфигурации сети..."
+	sudo cp -r ~/otus_project/FILES/netplan/50-cloud-init.yaml /etc/netplan/
+	sleep 1s
+	read -rp "Присвоить IP сервера > " q
+	sudo sed -i "6s/ip/$(echo $q)/g" /etc/netplan/50-cloud-init.yaml
+	sleep 1s
+	echo "Копирование конфигурации Apache2 и стартовой страници..."
+	sudo cp -r ~/otus_project/FILES/apache2/000-default.conf /etc/apache2/sites-available/
+	sudo cp -r ~/otus_project/FILES/apache2/index.html /var/www/html/
 	sudo cp -r ~/otus_project/FILES/apache2/ports.conf /etc/apache2
 	sleep 1s
-        echo "Запуск служб Apache2..."
-        sleep 1s; sudo systemctl enable apache2.service; sudo systemctl start apache2.service &>/dev/null
-        echo -e "Готово! IP адрес сервеа $(echo $q), Apache2 настроен на порту 8080!\n$slash"
+	echo "Запуск служб Apache2..."
+	sleep 1s; sudo systemctl enable apache2.service; sudo systemctl start apache2.service &>/dev/null
+	echo -e "Готово! IP адрес сервеа $(echo $q), Apache2 настроен на порту 8080!\n$slash"
 	;;
 	3) echo -e "Настройка Mysql (master)\n$slash"
 	;;
