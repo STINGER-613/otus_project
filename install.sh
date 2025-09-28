@@ -19,7 +19,6 @@ for i in ${apt_tools[@]}; do
 	sudo apt-get install $i -y &>/dev/null
 	if [ $? -eq 0 ]; then
 		echo "[$i] -> Установлено!"
-		sleep 1s
 	else
 		echo "[$i] -> Не установлено!"
 		sleep 2s; exit
