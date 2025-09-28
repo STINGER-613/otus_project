@@ -142,12 +142,12 @@ case $i in
 	sudo sed -i "81s/numbers/2/g" /etc/mysql/mysql.conf.d/mysqld.cnf
 	sleep 1s
 	echo "Подключение к мастеру Mysql по адресу $w..."
-	sudo cp ~/otus_project/FILES/slave.sql ~/
+	cp ~/otus_project/FILES/slave.sql ~/
 	read -rp "Укажите номер 'log' Mysql-master > " e
 	read -rp "Укажите номер 'pos' Mysql-master > " r
-	sudo sed -i "3s/ip/$(echo $w)/g" ~/master.sql
-	sudo sed -i "6s/log/$(echo $e)/g" ~/master.sql
-	sudo sed -i "7s/pos/$(echo $r)/g" ~/master.sql
+	sed -i "3s/ip/$(echo $w)/g" ~/master.sql
+	sed -i "6s/log/$(echo $e)/g" ~/master.sql
+	sed -i "7s/pos/$(echo $r)/g" ~/master.sql
 	sleep 1s
 	sudo mysql < ~/master.sql
 	echo -e "Реплика запущена в сторону $w!\nОжидается перезагрузка..."
