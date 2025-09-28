@@ -141,7 +141,7 @@ case $i in
 	sudo sed -i "81s/numbers/2/g" /etc/mysql/mysql.conf.d/mysqld.cnf
 	sleep 1s
 	echo "Подключение к мастеру Mysql по адресу $w..."
-	cp ~/otus_project/FILES/slave.sql ~/
+	cp ~/otus_project/FILES/mysql/slave.sql ~/
 	read -rp "Укажите номер 'log' Mysql-master > " e
 	read -rp "Укажите номер 'pos' Mysql-master > " r
 	sed -i "3s/ip/$(echo $w)/g" ~/master.sql
