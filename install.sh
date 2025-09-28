@@ -113,7 +113,6 @@ case $i in
 	echo "Копирование конфигурации в mysql.conf.d..."
 	sudo cp ~/otus_project/FILES/mysql/mysqld.cnf /etc/mysql/mysql.conf.d/
 	sleep 1s
-	read -rp "Присвоить IP сервера Mysql > " q
 	read -rp "Укажите адрес Slave > " w
 	sudo sed -i "83s/ip/$(echo $q)/g" /etc/mysql/mysql.conf.d/mysqld.cnf
 	sudo sed -i "81s/numbers/1/g" /etc/mysql/mysql.conf.d/mysqld.cnf
@@ -138,7 +137,6 @@ case $i in
 	echo "Копирование конфигурации в mysql.conf.d..."
 	sudo cp ~/otus_project/FILES/mysql/mysqld.cnf /etc/mysql/mysql.conf.d/
 	sleep 1s
-	read -rp "Присвоить IP сервера Mysql > " q
 	read -rp "Укажите адрес Master > " w
 	sudo sed -i "83s/ip/$(echo $q)/g" /etc/mysql/mysql.conf.d/mysqld.cnf
 	sudo sed -i "81s/numbers/2/g" /etc/mysql/mysql.conf.d/mysqld.cnf
