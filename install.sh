@@ -78,7 +78,7 @@ case $i in
 	sleep 1s
 	echo "Запуск служб Nginx..."
 	sleep 1s; sudo systemctl enable nginx.service; sudo systemctl start nginx.service &>/dev/null
-	echo -e "Готово! IP адрес сервера $(echo $q), Nginx настроен! Ожидается перезагрузка...\n$slash"
+	echo -e "Готово! IP адрес сервера $(echo $q), Nginx настроен!\nОжидается перезагрузка...\n$slash"
 	sleep 5s; sudo reboot
 	;;
 
@@ -98,7 +98,7 @@ case $i in
 	sleep 1s
 	echo "Запуск служб Apache2..."
 	sleep 1s; sudo systemctl enable apache2.service; sudo systemctl start apache2.service &>/dev/null
-	echo -e "Готово! IP адрес сервера $(echo $q), Apache2 настроен на порту 8080! Ожидается перезагрузка...\n$slash"
+	echo -e "Готово! IP адрес сервера $(echo $q), Apache2 настроен на порту 8080!\nОжидается перезагрузка...\n$slash"
 	sleep 5s; sudo reboot
 	;;
 
@@ -122,7 +122,7 @@ case $i in
 	sudo cp ~/otus_project/FILES/mysql/master.sql ~/
 	sudo sed -i "s/ip/$(echo $w)/g" ~/master.sql
 	sudo mysql < ~/master.sql
-	echo "Пользователь создан! Реплика запущена! Ожидается перезагрузка..."
+	echo -e "Пользователь создан! Реплика запущена!\nОжидается перезагрузка..."
 	sleep 1s; sudo systemctl enable mysql.service; sudo systemctl start mysql.service &>/dev/null
 	sleep 5s; sudo reboot
 	;;
@@ -152,7 +152,7 @@ case $i in
 	sudo sed -i "7s/pos/$(echo $r)/g" ~/master.sql
 	sleep 1s
 	sudo mysql < ~/master.sql
-	echo "Реплика запущена в сторону $w! Ожидается перезагрузка..."
+	echo -e "Реплика запущена в сторону $w!\nОжидается перезагрузка..."
 	sleep 1s; sudo systemctl enable mysql.service; sudo systemctl start mysql.service &>/dev/null
 	sleep 5s; sudo reboot
 	;;
