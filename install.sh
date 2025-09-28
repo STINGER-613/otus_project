@@ -98,7 +98,7 @@ case $i in
 	sleep 1s
 	echo "Запуск служб Apache2..."
 	sleep 1s; sudo systemctl enable apache2.service; sudo systemctl start apache2.service &>/dev/null
-	echo -e "Готово! IP адрес сервеа $(echo $q), Apache2 настроен на порту 8080!\n$slash"
+	echo -e "Готово! IP адрес сервра $(echo $q), Apache2 настроен на порту 8080!\n$slash"
 	;;
 	3) echo -e "Настройка Mysql (master)\n$slash"
 	;;
