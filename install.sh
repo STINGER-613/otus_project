@@ -118,9 +118,9 @@ case $i in
 	sudo sed -i "81s/numbers/1/g" /etc/mysql/mysql.conf.d/mysqld.cnf
 	sleep 1s
 	echo "Создание пользователя из файла конфигурации для адреса ..."
-	sudo cp ~/otus_project/FILES/mysql/master.sql ~/
-	sudo sed -i "s/ip/$(echo $w)/g" ~/master.sql
-	sudo mysql < ~/master.sql
+	cp ~/otus_project/FILES/mysql/master.sql ~/
+	sed -i "s/ip/$(echo $w)/g" ~/master.sql
+	mysql < ~/master.sql
 	echo -e "Пользователь создан!\nРеплика запущена!\nОжидается перезагрузка..."
 	sleep 1s; sudo systemctl enable mysql.service; sudo systemctl start mysql.service &>/dev/null
 	sleep 5s; sudo reboot
