@@ -72,6 +72,7 @@ case $i in
 	sleep 1s
 	read -rp "Присвоить IP сервера > " q
 	sudo sed -i "6s/ip/$(echo $q)/g" /etc/netplan/50-cloud-init.yaml
+	sudo netplan apply
 	sleep 1s
 	echo "Копирование конфигурации nginx..."
 	sudo cp -r ~/otus_project/FILES/nginx/default /etc/nginx/sites-available/
@@ -87,11 +88,13 @@ case $i in
 	sleep 1s
 	read -rp "Присвоить IP сервера > " q
 	sudo sed -i "6s/ip/$(echo $q)/g" /etc/netplan/50-cloud-init.yaml
+	sudo netplan apply
 	sleep 1s
 	echo "Копирование конфигурации Apache2 и стартовой страници..."
 	sudo cp -r ~/otus_project/FILES/apache2/000-default.conf /etc/apache2/sites-available/
 	sudo cp -r ~/otus_project/FILES/apache2/index.html /var/www/html/
 	sudo cp -r ~/otus_project/FILES/apache2/ports.conf /etc/apache2
+	sudo sed -i "10s/ip/$(echo $q)/g" /var/www/html/index.html
 	sleep 1s
 	echo "Запуск служб Apache2..."
 	sleep 1s; sudo systemctl enable apache2.service; sudo systemctl start apache2.service &>/dev/null
