@@ -61,7 +61,7 @@ read -rp "Какая цель у сервера:
 2) Apache2 (backend)
 3) Mysql (master)
 4) Mysql (slave)
-5) Grafana
+5) Grafana (monitoring)
 -> " i
 
 echo $slash
@@ -72,14 +72,14 @@ case $i in
 	sleep 1s
 	read -rp "Присвоить IP сервера > " q
 	sudo sed -i "6s/ip/$(echo $q)/g" /etc/netplan/50-cloud-init.yaml
-	sudo netplan apply
 	sleep 1s
 	echo "Копирование конфигурации nginx..."
 	sudo cp -r ~/otus_project/FILES/nginx/default /etc/nginx/sites-available/
 	sleep 1s
 	echo "Запуск служб Nginx..."
 	sleep 1s; sudo systemctl enable nginx.service; sudo systemctl start nginx.service &>/dev/null
-	echo -e "Готово! IP адрес сервера $(echo $q), Nginx настроен!\n$slash"
+	echo -e "Готово! IP адрес сервера $(echo $q), Nginx настроен! Ожидается перезагрузка...\n$slash"
+	sleep 5s; sudo reboot
 	;;
 
 	2) echo -e "Настройка Apache2 (backend)\n$slash"
@@ -98,7 +98,8 @@ case $i in
 	sleep 1s
 	echo "Запуск служб Apache2..."
 	sleep 1s; sudo systemctl enable apache2.service; sudo systemctl start apache2.service &>/dev/null
-	echo -e "Готово! IP адрес сервера $(echo $q), Apache2 настроен на порту 8080!\n$slash"
+	echo -e "Готово! IP адрес сервера $(echo $q), Apache2 настроен на порту 8080! Ожидается перезагрузка...\n$slash"
+	sleep 5s; sudo reboot
 	;;
 
 	3) echo -e "Настройка Mysql (master)\n$slash"
@@ -121,7 +122,9 @@ case $i in
 	sudo cp ~/otus_project/FILES/mysql/master.sql ~/
 	sudo sed -i "s/ip/$(echo $w)/g" ~/master.sql
 	sudo mysql < ~/master.sql
-	echo "Пользователь создан! Реплика запущена!"
+	echo "Пользователь создан! Реплика запущена! Ожидается перезагрузка..."
+	sleep 1s; sudo systemctl enable mysql.service; sudo systemctl start mysql.service &>/dev/null
+	sleep 5s; sudo reboot
 	;;
 
 	4) echo -e "Настройка Mysql (slave)\n$slash"
@@ -149,7 +152,9 @@ case $i in
 	sudo sed -i "7s/pos/$(echo $r)/g" ~/master.sql
 	sleep 1s
 	sudo mysql < ~/master.sql
-	echo "Реплика запущена в сторону $w!"
+	echo "Реплика запущена в сторону $w! Ожидается перезагрузка..."
+	sleep 1s; sudo systemctl enable mysql.service; sudo systemctl start mysql.service &>/dev/null
+	sleep 5s; sudo reboot
 	;;
 
 	5) echo -e "Настройка Grafana (monitoring)\n$slash"
@@ -160,6 +165,7 @@ case $i in
 	sudo sed -i "6s/ip/$(echo $q)/g" /etc/netplan/50-cloud-init.yaml
 	sudo netplan apply
 	sleep 1s
+	sleep 5s; sudo reboot
 	;;
 
 	*) echo -e "Ошибка назначения!"; exit
