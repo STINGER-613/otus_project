@@ -67,15 +67,16 @@ read -rp "Какая цель у сервера:
 echo $slash
 case $i in
 	1) echo -e "Настройка Nginx (frontend)\n$slash"
+        echo "Копирование конфигурации сети..."
+        sudo cp -r ~/otus_project/FILES/netplan/50-cloud-init.yaml /etc/netplan/
+        sleep 1s
 	read -rp "Присвоить IP сервера > " q
-	sed -i '6s/ip/$q/g' ~/otus_project/FILES/netplan/50-cloud-init.yaml
-	echo "Копирование конфигурации сети..."
-	sudo cp -r ~/otus_project/FILES/netplan/50-cloud-init.yaml /etc/netplan/
+	sudo sed -i "6s/ip/$(echo $q)/g" /etc/netplan/50-cloud-init.yaml
 	sleep 1s
 	echo "Копирование конфигурации nginx..."
 	sudo cp -r ~/otus_project/FILES/nginx/default /etc/nginx/sites-available/
 	sleep 1s
-	echo -e "Готово! IP адрес сервеа $q, Nginx настроен!\n$slash"
+	echo -e "Готово! IP адрес сервеа $(echo $q), Nginx настроен!\n$slash"
 	;;
 	2) echo -e "Настройка Apache2 (backend)\n$slash"
 	;;
