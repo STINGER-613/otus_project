@@ -76,6 +76,8 @@ case $i in
 	echo "Копирование конфигурации nginx..."
 	sudo cp -r ~/otus_project/FILES/nginx/default /etc/nginx/sites-available/
 	sleep 1s
+	echo "Запуск служб Nginx..."
+	sleep 1s; sudo systemctl enable nginx.service; sudo systemctl start nginx.service &>/dev/null
 	echo -e "Готово! IP адрес сервеа $(echo $q), Nginx настроен!\n$slash"
 	;;
 	2) echo -e "Настройка Apache2 (backend)\n$slash"
