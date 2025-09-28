@@ -101,8 +101,39 @@ case $i in
 	echo -e "Готово! IP адрес сервера $(echo $q), Apache2 настроен на порту 8080!\n$slash"
 	;;
 	3) echo -e "Настройка Mysql (master)\n$slash"
+	echo "Копирование конфигурации в mysql.conf.d..."
+	sudo cp ~/otus_project/FILES/mysql/mysqld.cnf /etc/mysql/mysql.conf.d/
+	sleep 1s
+	read -rp "Присвоить IP сервера > " q
+	read -rp "Укажите адрес Slave > " w
+	sudo sed -i "83s/ip/$(echo $q)/g" /etc/mysql/mysql.conf.d/mysqld.cnf
+	sudo sed -i "81s/numbers/1/g" /etc/mysql/mysql.conf.d/mysqld.cnf
+	sleep 1s
+	echo "Создание пользователя из файла конфигурации для адреса ..."
+	sudo cp ~/otus_project/FILES/mysql/master.sql ~/
+	sudo sed -i "s/ip/$(echo $w)/g" ~/master.sql
+	sudo mysql < ~/master.sql
+	echo "Пользователь создан! Реплика запущена!"
 	;;
 	4) echo -e "Настройка Mysql (slave)\n$slash"
+	echo "Копирование конфигурации в mysql.conf.d..."
+	sudo cp ~/otus_project/FILES/mysql/mysqld.cnf /etc/mysql/mysql.conf.d/
+	sleep 1s
+	read -rp "Присвоить IP сервера > " q
+	read -rp "Укажите адрес Master > " w
+	sudo sed -i "83s/ip/$(echo $q)/g" /etc/mysql/mysql.conf.d/mysqld.cnf
+	sudo sed -i "81s/numbers/2/g" /etc/mysql/mysql.conf.d/mysqld.cnf
+	sleep 1s
+	echo "Подключение к мастеру Mysql по адресу $w..."
+	sudo cp ~/otus_project/FILES/slave.sql ~/
+	read -rp "Укажите номер 'log' Mysql-master > " e
+	read -rp "Укажите номер 'pos' Mysql-master > " r
+	sudo sed -i "3s/ip/$(echo $w)/g" ~/master.sql
+	sudo sed -i "6s/log/$(echo $e)/g" ~/master.sql
+	sudo sed -i "7s/pos/$(echo $r)/g" ~/master.sql
+	sleep 1s
+	sudo mysql < ~/master.sql
+	echo "Реплика запущена в сторону $w!"
 	;;
 	5) echo -e "Настройка Grafana (monitoring)\n$slash"
 	;;
