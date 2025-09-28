@@ -100,7 +100,15 @@ case $i in
 	sleep 1s; sudo systemctl enable apache2.service; sudo systemctl start apache2.service &>/dev/null
 	echo -e "Готово! IP адрес сервера $(echo $q), Apache2 настроен на порту 8080!\n$slash"
 	;;
+
 	3) echo -e "Настройка Mysql (master)\n$slash"
+	echo "Копирование конфигурации сети..."
+	sudo cp -r ~/otus_project/FILES/netplan/50-cloud-init.yaml /etc/netplan/
+	sleep 1s
+	read -rp "Присвоить IP сервера > " q
+	sudo sed -i "6s/ip/$(echo $q)/g" /etc/netplan/50-cloud-init.yaml
+	sudo netplan apply
+	sleep 1s
 	echo "Копирование конфигурации в mysql.conf.d..."
 	sudo cp ~/otus_project/FILES/mysql/mysqld.cnf /etc/mysql/mysql.conf.d/
 	sleep 1s
@@ -115,7 +123,15 @@ case $i in
 	sudo mysql < ~/master.sql
 	echo "Пользователь создан! Реплика запущена!"
 	;;
+
 	4) echo -e "Настройка Mysql (slave)\n$slash"
+	echo "Копирование конфигурации сети..."
+	sudo cp -r ~/otus_project/FILES/netplan/50-cloud-init.yaml /etc/netplan/
+	sleep 1s
+	read -rp "Присвоить IP сервера > " q
+	sudo sed -i "6s/ip/$(echo $q)/g" /etc/netplan/50-cloud-init.yaml
+	sudo netplan apply
+	sleep 1s
 	echo "Копирование конфигурации в mysql.conf.d..."
 	sudo cp ~/otus_project/FILES/mysql/mysqld.cnf /etc/mysql/mysql.conf.d/
 	sleep 1s
@@ -135,8 +151,17 @@ case $i in
 	sudo mysql < ~/master.sql
 	echo "Реплика запущена в сторону $w!"
 	;;
+
 	5) echo -e "Настройка Grafana (monitoring)\n$slash"
+	echo "Копирование конфигурации сети..."
+	sudo cp -r ~/otus_project/FILES/netplan/50-cloud-init.yaml /etc/netplan/
+	sleep 1s
+	read -rp "Присвоить IP сервера > " q
+	sudo sed -i "6s/ip/$(echo $q)/g" /etc/netplan/50-cloud-init.yaml
+	sudo netplan apply
+	sleep 1s
 	;;
+
 	*) echo -e "Ошибка назначения!"; exit
 esac
 
