@@ -1,4 +1,5 @@
 upstream backend {
+    server localhost:8080;
     server 192.168.189.131:8080;
     server 192.168.189.132:8080;
     server 192.168.189.133:8080;
