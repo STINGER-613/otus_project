@@ -141,9 +141,9 @@ case $i in
 	cp ~/otus_project/FILES/mysql/slave.sql ~/
 	read -rp "Укажите номер 'log' Mysql-master > " e
 	read -rp "Укажите номер 'pos' Mysql-master > " r
-	sed -i "3s/ip/$(echo $w)/g" ~/slave.sql
-	sed -i "6s/log/$(echo $e)/g" ~/slave.sql
-	sed -i "7s/pos/$(echo $r)/g" ~/slave.sql
+	sed -i "4s/ip/$(echo $w)/g" ~/slave.sql
+	sed -i "7s/log/$(echo $e)/g" ~/slave.sql
+	sed -i "8s/pos/$(echo $r)/g" ~/slave.sql
 	sleep 1s
 	sudo mysql < ~/slave.sql
 	echo -e "Реплика запущена в сторону $w!\nОжидается перезагрузка..."
