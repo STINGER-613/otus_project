@@ -107,7 +107,6 @@ case $i in
 	sleep 1s
 	read -rp "Присвоить IP сервера > " q
 	sudo sed -i "6s/ip/$(echo $q)/g" /etc/netplan/50-cloud-init.yaml
-	sudo netplan apply
 	sleep 1s
 	echo "Копирование конфигурации в mysql.conf.d..."
         sleep 1s; sudo systemctl enable mysql.service; sudo systemctl start mysql.service &>/dev/null
@@ -131,7 +130,6 @@ case $i in
 	sleep 1s
 	read -rp "Присвоить IP сервера > " q
 	sudo sed -i "6s/ip/$(echo $q)/g" /etc/netplan/50-cloud-init.yaml
-	sudo netplan apply
 	sleep 1s
 	echo "Копирование конфигурации в mysql.conf.d..."
         sleep 1s; sudo systemctl enable mysql.service; sudo systemctl start mysql.service &>/dev/null
