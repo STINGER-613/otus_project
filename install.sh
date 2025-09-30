@@ -119,7 +119,7 @@ case $i in
 	echo "Создание пользователя из файла конфигурации для адреса ..."
 	cp ~/otus_project/FILES/mysql/master.sql ~/
 	sed -i "s/ip/$(echo $w)/g" ~/master.sql
-	mysql < ~/master.sql
+	sudo mysql < ~/master.sql
 	echo -e "Пользователь создан!\nРеплика запущена!\nОжидается перезагрузка..."
 	sleep 5s; sudo reboot
 	;;
