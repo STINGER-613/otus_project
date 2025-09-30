@@ -110,6 +110,7 @@ case $i in
 	sudo netplan apply
 	sleep 1s
 	echo "Копирование конфигурации в mysql.conf.d..."
+        sleep 1s; sudo systemctl enable mysql.service; sudo systemctl start mysql.service &>/dev/null
 	sudo cp ~/otus_project/FILES/mysql/mysqld.cnf /etc/mysql/mysql.conf.d/
 	sleep 1s
 	read -rp "Укажите адрес Slave > " w
@@ -121,7 +122,6 @@ case $i in
 	sed -i "s/ip/$(echo $w)/g" ~/master.sql
 	mysql < ~/master.sql
 	echo -e "Пользователь создан!\nРеплика запущена!\nОжидается перезагрузка..."
-	sleep 1s; sudo systemctl enable mysql.service; sudo systemctl start mysql.service &>/dev/null
 	sleep 5s; sudo reboot
 	;;
 
@@ -134,6 +134,7 @@ case $i in
 	sudo netplan apply
 	sleep 1s
 	echo "Копирование конфигурации в mysql.conf.d..."
+        sleep 1s; sudo systemctl enable mysql.service; sudo systemctl start mysql.service &>/dev/null
 	sudo cp ~/otus_project/FILES/mysql/mysqld.cnf /etc/mysql/mysql.conf.d/
 	sleep 1s
 	read -rp "Укажите адрес Master > " w
@@ -150,7 +151,6 @@ case $i in
 	sleep 1s
 	sudo mysql < ~/slave.sql
 	echo -e "Реплика запущена в сторону $w!\nОжидается перезагрузка..."
-	sleep 1s; sudo systemctl enable mysql.service; sudo systemctl start mysql.service &>/dev/null
 	sleep 5s; sudo reboot
 	;;
 
