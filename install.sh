@@ -109,7 +109,7 @@ case $i in
 	sudo sed -i "6s/ip/$(echo $q)/g" /etc/netplan/50-cloud-init.yaml
 	sleep 1s
 	echo "Копирование конфигурации в mysql.conf.d..."
-        sleep 1s; sudo systemctl enable mysql.service; sudo systemctl start mysql.service &>/dev/null
+        sleep 1s; sudo systemctl enable mysql.service; sudo systemctl start mysql.service
 	sudo cp ~/otus_project/FILES/mysql/mysqld.cnf /etc/mysql/mysql.conf.d/
 	sleep 1s
 	read -rp "Укажите адрес Slave > " w
@@ -132,7 +132,7 @@ case $i in
 	sudo sed -i "6s/ip/$(echo $q)/g" /etc/netplan/50-cloud-init.yaml
 	sleep 1s
 	echo "Копирование конфигурации в mysql.conf.d..."
-        sleep 1s; sudo systemctl enable mysql.service; sudo systemctl start mysql.service &>/dev/null
+        sleep 1s; sudo systemctl enable mysql.service; sudo systemctl start mysql.service
 	sudo cp ~/otus_project/FILES/mysql/mysqld.cnf /etc/mysql/mysql.conf.d/
 	sleep 1s
 	read -rp "Укажите адрес Master > " w
