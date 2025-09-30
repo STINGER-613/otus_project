@@ -31,24 +31,7 @@ sudo systemctl disable nginx.service apache2.service mysql.service &>/dev/null
 sudo systemctl stop nginx.service apache2.service mysql.service &>/dev/null
 echo -e "Complite!\n$slash"
 
-########################################################################
-#Github check
-########################################################################
-#sleep 2s
-#ping -c 2 github.com &>/dev/null
-
-#if [ $? != 0 ]; then 
-#	echo "Отсутствует подключение к [GITHUB]"
-#	sleep 1s
-#	exit 0
-#else
-#	echo "Скачивание репозитория OTUS_PROJECT..."
-#	cd /home/$(whoami)/
-#	git clone git@github.com:STINGER-613/otus_project.git &>/dev/null
-#	echo -e "Файлы скопированы!\n$slash"
-#	sleep 3s; clear
-#fi
-
+clear
 ########################################################################
 # Выбор действия с сервером
 ########################################################################
