@@ -144,8 +144,7 @@ case $i in
 	sleep 1s
 	read -rp "Присвоить IP сервера > " q
 	sudo sed -i "6s/ip/$(echo $q)/g" /etc/netplan/50-cloud-init.yaml
-	sudo netplan apply
-	sleep 1s
+	read -rp "Нажмите любую клавишу для продолжения!"
 	sleep 5s; sudo reboot
 	;;
 
