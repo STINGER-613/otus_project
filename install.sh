@@ -110,6 +110,8 @@ case $i in
 	sleep 1s
 	echo "Копирование конфигурации в mysql.conf.d..."
         sleep 1s; sudo systemctl enable mysql.service; sudo systemctl start mysql.service
+	sudo service mysql start
+	sleep 3s
 	sudo cp ~/otus_project/FILES/mysql/mysqld.cnf /etc/mysql/mysql.conf.d/
 	sleep 1s
 	sudo sed -i "81s/numbers/1/g" /etc/mysql/mysql.conf.d/mysqld.cnf
