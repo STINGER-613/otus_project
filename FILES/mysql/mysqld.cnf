@@ -82,4 +82,5 @@ server-id               = numbers
 log_bin                 = /var/log/mysql/mysql-bin.log
 read_only		= OFF
 log_slave_updates	= OFF
+bind-address		= 0.0.0.0
 ##########################################################
