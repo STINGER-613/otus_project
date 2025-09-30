@@ -80,5 +80,6 @@ max_binlog_size   = 100M
 ##########################################################
 server-id               = numbers
 log_bin                 = /var/log/mysql/mysql-bin.log
-bind-address            = ip
+read_only		= OFF
+log_slave_updates	= OFF
 ##########################################################

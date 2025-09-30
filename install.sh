@@ -112,14 +112,10 @@ case $i in
         sleep 1s; sudo systemctl enable mysql.service; sudo systemctl start mysql.service
 	sudo cp ~/otus_project/FILES/mysql/mysqld.cnf /etc/mysql/mysql.conf.d/
 	sleep 1s
-	read -rp "Укажите адрес Slave > " w
-	sudo sed -i "83s/ip/$(echo $q)/g" /etc/mysql/mysql.conf.d/mysqld.cnf
 	sudo sed -i "81s/numbers/1/g" /etc/mysql/mysql.conf.d/mysqld.cnf
 	sleep 1s
 	echo "Создание пользователя из файла конфигурации для адреса ..."
-	cp ~/otus_project/FILES/mysql/master.sql ~/
-	sed -i "s/ip/$(echo $w)/g" ~/master.sql
-	sudo mysql < ~/master.sql
+	sudo mysql < ~/otus_project/FILES/mysql/master.sql
 	echo -e "Пользователь создан!\nРеплика запущена!\nОжидается перезагрузка..."
 	sleep 5s; sudo reboot
 	;;
@@ -136,7 +132,8 @@ case $i in
 	sudo cp ~/otus_project/FILES/mysql/mysqld.cnf /etc/mysql/mysql.conf.d/
 	sleep 1s
 	read -rp "Укажите адрес Master > " w
-	sudo sed -i "83s/ip/$(echo $q)/g" /etc/mysql/mysql.conf.d/mysqld.cnf
+	sudo sed -i "83s/OFF/ON/g" /etc/mysql/mysql.conf.d/mysqld.cnf
+	sudo sed -i "84s/OFF/ON/g" /etc/mysql/mysql.conf.d/mysqld.cnf
 	sudo sed -i "81s/numbers/2/g" /etc/mysql/mysql.conf.d/mysqld.cnf
 	sleep 1s
 	echo "Подключение к мастеру Mysql по адресу $w..."
