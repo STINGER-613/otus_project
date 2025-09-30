@@ -101,6 +101,8 @@ case $i in
 	sleep 1s
 	echo "Создание пользователя из файла конфигурации для адреса ..."
 	sudo mysql < ~/otus_project/FILES/mysql/master.sql
+	sudo systemctl restart mysql.service
+	echo show master status | sudo mysql
 	echo -e "Пользователь создан!\nРеплика запущена!\nОжидается перезагрузка..."
 	read -rp "Нажмите любую клавишу для продолжения!"
 	sleep 5s; sudo reboot
