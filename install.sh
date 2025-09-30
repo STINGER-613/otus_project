@@ -134,8 +134,8 @@ case $i in
 	sleep 1s
 	sudo mysql < ~/slave.sql
 	echo -e "Реплика запущена в сторону $w!\nОжидается перезагрузка..."
-	sleep 5s; sudo reboot
 	read -rp "Нажмите любую клавишу для продолжения!"
+	sleep 5s; sudo reboot
 	;;
 
 	5) echo -e "Настройка Grafana (monitoring)\n$slash"
