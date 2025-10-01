@@ -13,7 +13,6 @@
 # ============================== Filebeat inputs ===============================
 
 filebeat.inputs:
-
 # Each - is an input. Most options can be set at the input level, so
 # you can use different inputs for various configurations.
 # Below are the input specific configurations.
@@ -32,6 +31,17 @@ filebeat.inputs:
   paths:
     - /var/log/*.log
     #- c:\programdata\elasticsearch\logs\*
+
+- type: filestream
+  paths:
+    - /var/log/nginx/*.log
+
+  enabled: true
+  exclude_files: ['.gz$']
+  prospector.scanner.exclude_files: ['.gz$']
+
+output.logstash:
+  hosts: ["localhost:5400"]
 
   # Exclude lines. A list of regular expressions to match. It drops the lines that are
   # matching any regular expression from the list.
@@ -150,9 +160,9 @@ setup.kibana:
   #password: "changeme"
 
 # ------------------------------ Logstash Output -------------------------------
-output.logstash:
+#output.logstash:
   # The Logstash hosts
-  hosts: ["localhost:5400"]
+ # hosts: ["localhost:5400"]
 
   # Optional SSL. By default is off.
   # List of root certificates for HTTPS server verifications
@@ -232,14 +242,3 @@ processors:
 # This allows to enable 6.7 migration aliases
 #migration.6_to_7.enabled: true
 
-filebeat.inputs:
-- type: filestream
-  paths:
-    - /var/log/nginx/*.log
-
-  enabled: true
-  exclude_files: ['.gz$']
-  prospector.scanner.exclude_files: ['.gz$']
-
-output.logstash:
-  hosts: ["localhost:5400"]
