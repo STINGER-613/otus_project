@@ -15,7 +15,7 @@ sleep 1s
 sudo apt install prometheus -y
 
 echo "Копирование конфигураций Prometheus..."
-sudo cp ~/@@@@@/FILES/monitoring/prometheus.yml /etc/prometheus
+sudo cp ~/otus_project/FILES/monitoring/prometheus.yml /etc/prometheus
 sleep 1s
 
 echo "Запуск служб..."
