@@ -13,7 +13,8 @@ sudo apt-get update -y
 clear
 echo -e "$slash\nУстановка пакетов и их зависимостей...\n$slash"; sleep 2s
 apt_tools=(git network-manager wget curl zsh apache2 nginx mysql-server* net-tools iptables)
-
+sudo systemctl disable apache2.service nginx.service mysql.service --now &>/dev/null
+sudo systemctl stop apache2.service nginx.service mysql.service &>/dev/null
 for i in ${apt_tools[@]}; do
 	sudo apt-get install $i -y
 	if [ $? -eq 0 ]; then
