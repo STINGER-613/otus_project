@@ -8,15 +8,16 @@ echo "Копирование конфигурации сети..."
 sudo cp -r ~/otus_project/FILES/netplan/50-cloud-init.yaml /etc/netplan/
 sleep 1s
 sudo sed -i "6s/ip/$(echo $IP)/g" /etc/netplan/50-cloud-init.yaml
+sudo netplan apply
 sleep 1s
 
 echo "Установка компонентов для логирования..."
 sleep 1s
-sudo apt-get install default-jdk -y 1>/dev/null
-sudo dpkg -i ~/elasticsearch_8.9.1_amd64-224190-f79e75.deb -y 1>/dev/null
-sudo dpkg -i ~/filebeat_8.9.1_amd64-224190-bc3f59.deb -y 1>/dev/null
-sudo dpkg -i ~/kibana_8.9.1_amd64-224190-f7ebba.deb -y 1>/dev/null
-sudo dpkg -i ~/logstash_8.9.1_amd64-224190-11b1b0.deb -y 1>/dev/null
+sudo apt-get install default-jdk -y 1>/dev/null; echo "[Java] -> Установлено!"
+sudo dpkg -i ~/elasticsearch_8.17.1_amd64-224190-facdd9.deb -y 1>/dev/null; echo "[Elasticsearch] -> Установлено!"
+sudo dpkg -i ~/filebeat_8.17.1_amd64-224190-336eb6.deb -y 1>/dev/null; echo "[Filebeat] -> Установлено!"
+sudo dpkg -i ~/kibana_8.17.1_amd64-224190-b005ec.deb -y 1>/dev/null; echo "[Kibana] -> Установлено!"
+sudo dpkg -i ~/logstash_8.17.1_amd64-224190-fcb42f.deb -y 1>/dev/null; echo "[Logstash] -> Установлено!"
 
 echo "Копирование конфигураций..."
 sudo cp ~/otus_project/FILES/logs/jvm.options /etc/elasticsearch/jvm.options.d/
