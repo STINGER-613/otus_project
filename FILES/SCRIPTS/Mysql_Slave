@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+IP_SLAVE="192.168.189.134"
+IP_MASTER="192.168.189.133"
+
+echo -e "$slash\nНастройка Mysql (slave)\n$slash"
+echo "Копирование конфигурации сети..."
+sudo cp -r ~/otus_project/FILES/netplan/50-cloud-init.yaml /etc/netplan/
+sleep 1s
+sudo sed -i "6s/ip/$(echo $IP_SLAVE)/g" /etc/netplan/50-cloud-init.yaml	
+sleep 1s
+
+echo "Копирование конфигурации в mysql.conf.d..."
+sleep 1s; sudo systemctl enable mysql.service; sudo systemctl start mysql.service
+sudo cp ~/otus_project/FILES/mysql/mysqld.cnf /etc/mysql/mysql.conf.d/
+sleep 1s
+sudo sed -i "83s/OFF/ON/g" /etc/mysql/mysql.conf.d/mysqld.cnf
+sudo sed -i "84s/OFF/ON/g" /etc/mysql/mysql.conf.d/mysqld.cnf
+sudo sed -i "81s/numbers/2/g" /etc/mysql/mysql.conf.d/mysqld.cnf
+sleep 1s
+
+echo "Подключение к мастеру Mysql по адресу $IP_MASTER..."
+cp ~/otus_project/FILES/mysql/slave.sql ~/
+read -rp "Укажите номер 'log' Mysql-master > " e
+read -rp "Укажите номер 'pos' Mysql-master > " r
+sed -i "2s/ip/$(echo $IP_MASTER)/g" ~/slave.sql
+sed -i "5s/log/$(echo $e)/g" ~/slave.sql
+sed -i "6s/pos/$(echo $r)/g" ~/slave.sql
+sleep 1s
+sudo mysql < ~/slave.sql
+
+echo -e "\n\nРеплика запущена в сторону $IP_SLAVE!\nОжидается перезагрузка..."
+read -rp "Нажмите любую клавишу для продолжения!"
+sleep 5s; sudo reboot

@@ -13,7 +13,6 @@ sudo apt-get update -y &>/dev/null
 clear
 echo -e "$slash\nУстановка пакетов и их зависимостей...\n$slash"; sleep 2s
 apt_tools=(git iptables-persistent netfilter-persistent network-manager net-tools wget curl zsh apache2 nginx mysql-server* net-tools iptables)
-#sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 for i in ${apt_tools[@]}; do
 	sudo apt-get install $i -y &>/dev/null
@@ -25,11 +24,8 @@ for i in ${apt_tools[@]}; do
 	fi
 done
 
-
-echo -e "$slash\nОтключение|остановка служб...\n$slash"
-sudo systemctl disable nginx.service apache2.service mysql.service &>/dev/null
-sudo systemctl stop nginx.service apache2.service mysql.service &>/dev/null
 echo -e "Complite!\n$slash"
+sleep 2s
 
 clear
 ########################################################################
@@ -48,105 +44,13 @@ read -rp "Какая цель у сервера:
 
 echo $slash
 case $i in
-	1) echo -e "Настройка Nginx (frontend)\n$slash"
-	echo "Копирование конфигурации сети..."
-	sudo cp -r ~/otus_project/FILES/netplan/50-cloud-init.yaml /etc/netplan/
-	sleep 1s
-	read -rp "Присвоить IP сервера > " q
-	sudo sed -i "6s/ip/$(echo $q)/g" /etc/netplan/50-cloud-init.yaml
-	sleep 1s
-	echo "Копирование конфигурации nginx..."
-	sudo cp -r ~/otus_project/FILES/nginx/default /etc/nginx/sites-available/
-	sleep 1s
-	echo "Запуск служб Nginx..."
-	sleep 1s; sudo systemctl enable nginx.service; sudo systemctl start nginx.service &>/dev/null
-	echo -e "Готово! IP адрес сервера $(echo $q)\nNginx настроен!\nОжидается перезагрузка...\n$slash"
-	sleep 5s; sudo reboot
-	;;
-
-	2) echo -e "Настройка Apache2 (backend)\n$slash"
-	echo "Копирование конфигурации сети..."
-	sudo cp -r ~/otus_project/FILES/netplan/50-cloud-init.yaml /etc/netplan/
-	sleep 1s
-	read -rp "Присвоить IP сервера > " q
-	sudo sed -i "6s/ip/$(echo $q)/g" /etc/netplan/50-cloud-init.yaml
-	sudo netplan apply
-	sleep 1s
-	echo "Копирование конфигурации Apache2 и стартовой страници..."
-	sudo cp -r ~/otus_project/FILES/apache2/000-default.conf /etc/apache2/sites-available/
-	sudo cp -r ~/otus_project/FILES/apache2/index.html /var/www/html/
-	sudo cp -r ~/otus_project/FILES/apache2/ports.conf /etc/apache2
-	sudo sed -i "10s/ip/$(echo $q)/g" /var/www/html/index.html
-	sleep 1s
-	echo "Запуск служб Apache2..."
-	sleep 1s; sudo systemctl enable apache2.service; sudo systemctl start apache2.service &>/dev/null
-	echo -e "Готово! IP адрес сервера $(echo $q)\nApache2 настроен на порту 8080!\nОжидается перезагрузка...\n$slash"
-	sleep 5s; sudo reboot
-	;;
-
-	3) echo -e "Настройка Mysql (master)\n$slash"
-	echo "Копирование конфигурации сети..."
-	sudo cp -r ~/otus_project/FILES/netplan/50-cloud-init.yaml /etc/netplan/
-	sleep 1s
-	read -rp "Присвоить IP сервера > " q
-	sudo sed -i "6s/ip/$(echo $q)/g" /etc/netplan/50-cloud-init.yaml
-	sleep 1s
-	echo "Копирование конфигурации в mysql.conf.d..."
-        sleep 1s; sudo systemctl enable mysql.service; sudo systemctl start mysql.service
-	sudo service mysql start
-	sleep 3s
-	sudo cp ~/otus_project/FILES/mysql/mysqld.cnf /etc/mysql/mysql.conf.d/
-	sleep 1s
-	sudo sed -i "81s/numbers/1/g" /etc/mysql/mysql.conf.d/mysqld.cnf
-	sleep 1s
-	echo "Создание пользователя из файла конфигурации для адреса ..."
-	sudo mysql < ~/otus_project/FILES/mysql/master.sql
-	sudo systemctl restart mysql.service
-	echo show master status | sudo mysql
-	echo -e "Пользователь создан!\nРеплика запущена!\nОжидается перезагрузка..."
-	read -rp "Нажмите любую клавишу для продолжения!"
-	sleep 5s; sudo reboot
-	;;
-
-	4) echo -e "Настройка Mysql (slave)\n$slash"
-	echo "Копирование конфигурации сети..."
-	sudo cp -r ~/otus_project/FILES/netplan/50-cloud-init.yaml /etc/netplan/
-	sleep 1s
-	read -rp "Присвоить IP сервера > " q
-	sudo sed -i "6s/ip/$(echo $q)/g" /etc/netplan/50-cloud-init.yaml
-	sleep 1s
-	echo "Копирование конфигурации в mysql.conf.d..."
-        sleep 1s; sudo systemctl enable mysql.service; sudo systemctl start mysql.service
-	sudo cp ~/otus_project/FILES/mysql/mysqld.cnf /etc/mysql/mysql.conf.d/
-	sleep 1s
-	read -rp "Укажите адрес Master > " w
-	sudo sed -i "83s/OFF/ON/g" /etc/mysql/mysql.conf.d/mysqld.cnf
-	sudo sed -i "84s/OFF/ON/g" /etc/mysql/mysql.conf.d/mysqld.cnf
-	sudo sed -i "81s/numbers/2/g" /etc/mysql/mysql.conf.d/mysqld.cnf
-	sleep 1s
-	echo "Подключение к мастеру Mysql по адресу $w..."
-	cp ~/otus_project/FILES/mysql/slave.sql ~/
-	read -rp "Укажите номер 'log' Mysql-master > " e
-	read -rp "Укажите номер 'pos' Mysql-master > " r
-	sed -i "2s/ip/$(echo $w)/g" ~/slave.sql
-	sed -i "5s/log/$(echo $e)/g" ~/slave.sql
-	sed -i "6s/pos/$(echo $r)/g" ~/slave.sql
-	sleep 1s
-	sudo mysql < ~/slave.sql
-	echo -e "Реплика запущена в сторону $w!\nОжидается перезагрузка..."
-	read -rp "Нажмите любую клавишу для продолжения!"
-	sleep 5s; sudo reboot
-	;;
-
-	5) echo -e "Настройка Grafana (monitoring)\n$slash"
-	echo "Копирование конфигурации сети..."
-	sudo cp -r ~/otus_project/FILES/netplan/50-cloud-init.yaml /etc/netplan/
-	sleep 1s
-	read -rp "Присвоить IP сервера > " q
-	sudo sed -i "6s/ip/$(echo $q)/g" /etc/netplan/50-cloud-init.yaml
-	read -rp "Нажмите любую клавишу для продолжения!"
-	sleep 5s; sudo reboot
-	;;
+	1)~/otus_project/FILES/SCRIPTS/Nginx;;
+	2)~/otus_project/FILES/SCRIPTS/Apache2;;
+	3)~/otus_project/FILES/SCRIPTS/Mysql_Master;;
+	4)~/otus_project/FILES/SCRIPTS/Mysql_Slave;;
+	5)~/otus_project/FILES/SCRIPTS/Grafana;;
+	6)~/otus_project/FILES/SCRIPTS/;;
+	7)~/otus_project/FILES/SCRIPTS/;;
 
 	*) echo -e "Ошибка назначения!"; exit
 esac
