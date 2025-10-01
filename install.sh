@@ -12,7 +12,7 @@ echo -e "$slash\nОбновление...\n$slash"
 sudo apt-get update -y
 clear
 echo -e "$slash\nУстановка пакетов и их зависимостей...\n$slash"; sleep 2s
-apt_tools=(git iptables-persistent netfilter-persistent network-manager wget curl zsh apache2 nginx mysql-server* net-tools iptables)
+apt_tools=(git network-manager wget curl zsh apache2 nginx mysql-server* net-tools iptables)
 
 for i in ${apt_tools[@]}; do
 	sudo apt-get install $i -y
