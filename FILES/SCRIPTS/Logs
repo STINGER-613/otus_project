@@ -14,10 +14,10 @@ sleep 1s
 echo "Установка компонентов для логирования..."
 sleep 1s
 sudo apt-get install default-jdk -y 1>/dev/null; echo "[Java] -> Установлено!"
-sudo dpkg -i ~/elasticsearch_8.17.1_amd64-224190-facdd9.deb 1>/dev/null; echo "[Elasticsearch] -> Установлено!"
-sudo dpkg -i ~/filebeat_8.17.1_amd64-224190-336eb6.deb 1>/dev/null; echo "[Filebeat] -> Установлено!"
-sudo dpkg -i ~/kibana_8.17.1_amd64-224190-b005ec.deb 1>/dev/null; echo "[Kibana] -> Установлено!"
-sudo dpkg -i ~/logstash_8.17.1_amd64-224190-fcb42f.deb 1>/dev/null; echo "[Logstash] -> Установлено!"
+sudo dpkg -i ~/elasticsearch.deb 1>/dev/null; echo "[Elasticsearch] -> Установлено!"
+sudo dpkg -i ~/filebeat.deb 1>/dev/null; echo "[Filebeat] -> Установлено!"
+sudo dpkg -i ~/kibana.deb 1>/dev/null; echo "[Kibana] -> Установлено!"
+sudo dpkg -i ~/logstash.deb 1>/dev/null; echo "[Logstash] -> Установлено!"
 
 echo "Копирование конфигураций..."
 sudo cp ~/otus_project/FILES/logs/jvm.options /etc/elasticsearch/jvm.options.d/
