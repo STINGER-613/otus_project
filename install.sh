@@ -48,7 +48,7 @@ case $i in
 	2)~/otus_project/FILES/SCRIPTS/Apache2;;
 	3)~/otus_project/FILES/SCRIPTS/Mysql_Master;;
 	4)~/otus_project/FILES/SCRIPTS/Mysql_Slave;;
-	5)~/otus_project/FILES/SCRIPTS/Grafana;;
+	5)~/otus_project/FILES/SCRIPTS/Monitoring;;
 	6)~/otus_project/FILES/SCRIPTS/;;
 	7)~/otus_project/FILES/SCRIPTS/;;
 
