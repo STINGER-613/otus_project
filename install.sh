@@ -9,14 +9,14 @@ slash="---------------------------------------------"
 clear
 
 echo -e "$slash\nОбновление...\n$slash"
-sudo apt-get update -y
+sudo apt-get update -y 1>/dev/null
 clear
 echo -e "$slash\nУстановка пакетов и их зависимостей...\n$slash"; sleep 2s
 apt_tools=(git network-manager wget curl zsh apache2 nginx mysql-server* net-tools iptables)
-sudo systemctl disable apache2.service nginx.service mysql.service --now &>/dev/null
-sudo systemctl stop apache2.service nginx.service mysql.service &>/dev/null
+sudo systemctl disable apache2.service nginx.service mysql.service --now 1>/dev/null
+sudo systemctl stop apache2.service nginx.service mysql.service 1>/dev/null
 for i in ${apt_tools[@]}; do
-	sudo apt-get install $i -y
+	sudo apt-get install $i -y 1>/dev/null
 	if [ $? -eq 0 ]; then
 		echo "[$i] -> Установлено!"
 	else
