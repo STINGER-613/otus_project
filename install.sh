@@ -52,7 +52,7 @@ case $i in
 	6)~/otus_project/FILES/SCRIPTS/;;
 	7)~/otus_project/FILES/SCRIPTS/;;
 
-	*) echo -e "Ошибка назначения!"; exit
+	*) echo -e "Ошибка назначения!"; read -rp "Нажмите любую клавишу для продолжения!"; exit
 esac
 
 

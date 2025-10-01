@@ -9,15 +9,29 @@ sudo cp -r ~/otus_project/FILES/netplan/50-cloud-init.yaml /etc/netplan/
 sleep 1s
 sudo sed -i "6s/ip/$(echo $IP)/g" /etc/netplan/50-cloud-init.yaml
 sleep 1s
-echo "Установка компонентов мониторинга..."
+
+echo "Установка компонентов мониторинга для Prometheus..."
 sleep 1s
 sudo apt install prometheus -y
 
-echo "Копирование конфигураций..."
-sudo cp -r ~/otus_project/FILES/monitoring 
+echo "Копирование конфигураций Prometheus..."
+sudo cp ~/@@@@@/FILES/monitoring/prometheus.yml /etc/prometheus
 sleep 1s
 
 echo "Запуск служб..."
-sleep 1s; sudo systemctl enable nginx.service; sudo systemctl start nginx.service
-echo -e "\n\nГотово! IP адрес сервера $(echo $q)\nNginx настроен!\nОжидается перезагрузка...\n$slash"
+sleep 1s; sudo systemctl enable --now prometheus.service 
+echo -e "\n\nГотово! IP адрес сервера $(echo $IP)\nPrometheus настроен!\n$slash"
+
+echo "Установка компонентов мониторинга для Grafana..."
+sleep 1s
+echo "Скачивание 'deb' пакета версии 12.1.1..."
+cd ~/
+wget https://mirrors.huaweicloud.com/grafana/12.1.1/grafana-enterprise_12.1.1_16903967602_linux_amd64.deb -P ~/
+echo -e "\n\nУстановка Grafana...\n"
+sleep 1; sudo apt-get install ~/grafana-enterprise_12.1.1_16903967602_linux_amd64.deb -y
+sleep 1s; sudo systemctl enable --now grafana-server.service
+
+echo -e "\nУстановка завершена!\nСлужбы запущены!\nGrafana доступна по ссылке http://localhost:3000\n"
+echo -e "Для импорта панели из файла .json требуется перейти по пути http://localhost:3000/dashboard/import\n\n"
+read -rp "Нажмите любую клавишу для продолжения!"
 sleep 5s; sudo reboot

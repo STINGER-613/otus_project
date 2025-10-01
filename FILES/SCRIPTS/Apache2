@@ -18,4 +18,5 @@ sleep 1s
 
 echo "Запуск служб Apache2..."
 sleep 1s; sudo systemctl enable apache2.service; sudo systemctl start apache2.service &>/dev/nullecho -e "Готово! IP адрес сервера $(echo $IP_APACHE)\n\n\nApache2 настроен на порту 8080!\nОжидается перезагрузка...\n$slash"
+read -rp "Нажмите любую клавишу для продолжения!"
 sleep 5s; sudo reboot

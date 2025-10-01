@@ -17,4 +17,5 @@ sleep 1s
 echo "Запуск служб Nginx..."
 sleep 1s; sudo systemctl enable nginx.service; sudo systemctl start nginx.service
 echo -e "\n\nГотово! IP адрес сервера $(echo $q)\nNginx настроен!\nОжидается перезагрузка...\n$slash"
+read -rp "Нажмите любую клавишу для продолжения!"
 sleep 5s; sudo reboot
