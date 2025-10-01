@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+IP="192.168.189.136"
+
+clear
+echo -e "$slash\nНастройка логирования...\n$slash"
+echo "Копирование конфигурации сети..."
+sudo cp -r ~/otus_project/FILES/netplan/50-cloud-init.yaml /etc/netplan/
+sleep 1s
+sudo sed -i "6s/ip/$(echo $IP)/g" /etc/netplan/50-cloud-init.yaml
+sleep 1s
+
+echo "Установка компонентов для логирования..."
+sleep 1s
+sudo apt-get install default-jdk -y &>/dev/null
+sudo apt-get install ~/elasticsearch_8.9.1_amd64-224190-f79e75.deb -y &>/dev/null
+sudo apt-get install ~/filebeat_8.9.1_amd64-224190-bc3f59.deb -y &>/dev/null
+sudo apt-get install ~/kibana_8.9.1_amd64-224190-f7ebba.deb -y &>/dev/null
+sudo atp-get isntall ~/logstash_8.9.1_amd64-224190-11b1b0.deb -y &>/dev/null
+
+echo "Копирование конфигураций..."
+sudo cp ~/otus_project/FILES/logs/jvm.options /etc/elasticsearch/jvm.options.d/
+sudo cp ~/otus_project/FILES/logs/elasticsearch.yml /etc/elasticsearch/
+
+sleep 1s
+
+echo "Запуск служб..."
+
+sudo systemctl enable --now elasticsearch.service
+
+echo -e "\n\nГотово! IP адрес сервера $(echo $IP)\n$slash"
+read -rp "Нажмите любую клавишу для продолжения!"
+sleep 5s; sudo reboot
