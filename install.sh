@@ -25,7 +25,8 @@ for i in ${apt_tools[@]}; do
 	fi
 done
 
-echo -e "Complite!\n$slash"
+sleep 1s
+echo -e "\nComplite!\n$slash"
 sleep 2s
 
 clear
