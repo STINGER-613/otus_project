@@ -25,11 +25,6 @@ sudo cp ~/otus_project/FILES/logs/elasticsearch.yml /etc/elasticsearch/
 
 sleep 1s
 
-echo "Запуск служб..."
-sudo systemctl enable --now elasticsearch.service
-
-sudo /usr/share/elasticsearch/bin/elasticsearch-reset-password -u elastic -i
-
 echo -e "\n\nГотово! IP адрес сервера $(echo $IP)\n$slash"
 read -rp "Нажмите любую клавишу для продолжения!"
 sleep 5s; sudo reboot
