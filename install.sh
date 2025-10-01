@@ -9,13 +9,13 @@ slash="---------------------------------------------"
 clear
 
 echo -e "$slash\nОбновление...\n$slash"
-sudo apt-get update -y &>/dev/null
+sudo apt-get update -y
 clear
 echo -e "$slash\nУстановка пакетов и их зависимостей...\n$slash"; sleep 2s
 apt_tools=(git iptables-persistent netfilter-persistent network-manager wget curl zsh apache2 nginx mysql-server* net-tools iptables)
 
 for i in ${apt_tools[@]}; do
-	sudo apt-get install $i -y &>/dev/null
+	sudo apt-get install $i -y
 	if [ $? -eq 0 ]; then
 		echo "[$i] -> Установлено!"
 	else
