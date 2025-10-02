@@ -12,8 +12,6 @@ sudo apt-get install ~/filebeat*.deb -y 1>/dev/null; echo "[Filebeat] -> Уст�
 sudo apt-get install ~/kibana*.deb -y 1>/dev/null; echo "[Kibana] -> Установлено!"
 sudo apt-get install ~/logstash*.deb -y 1>/dev/null; echo "[Logstash] -> Установлено!"
 
-
-
 echo "Копирование конфигураций..."
 sudo cp ~/otus_project/FILES/logs/jvm.options /etc/elasticsearch/jvm.options.d/
 sudo cp ~/otus_project/FILES/logs/elasticsearch.yml /etc/elasticsearch/
