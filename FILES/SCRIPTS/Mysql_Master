@@ -1,16 +1,14 @@
 #!/usr/bin/env bash
 
-IP_SLAVE="192.168.189.134"
-IP_MASTER="192.168.189.133"
-
 clear
 echo -e "$slash\nНастройка Mysql (master)\n$slash"
+sleep 1s
 echo "Копирование конфигурации сети..."
 sudo cp -r ~/otus_project/FILES/netplan/50-cloud-init.yaml /etc/netplan/
 sleep 1s
-sudo sed -i "6s/ip/$(echo $IP_MASTER)/g" /etc/netplan/50-cloud-init.yaml
+sudo sed -i "6s/ip/192.168.189.133/g" /etc/netplan/50-cloud-init.yaml
+sudo netplan apply
 sleep 1s
-
 echo "Копирование конфигурации в mysql.conf.d..."
 sleep 1s; sudo systemctl enable mysql.service; sudo systemctl start mysql.service
 sudo service mysql start

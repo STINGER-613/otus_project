@@ -1,16 +1,14 @@
 #!/usr/bin/env bash
 
-IP="192.168.189.136"
-
 clear
 echo -e "$slash\nНастройка логирования...\n$slash"
+sleep 1s
 echo "Копирование конфигурации сети..."
 sudo cp -r ~/otus_project/FILES/netplan/50-cloud-init.yaml /etc/netplan/
 sleep 1s
-sudo sed -i "6s/ip/$(echo $IP)/g" /etc/netplan/50-cloud-init.yaml
+sudo sed -i "6s/ip/192.168.189.135/g" /etc/netplan/50-cloud-init.yaml
 sudo netplan apply
 sleep 1s
-
 echo "Установка компонентов для логирования..."
 sleep 1s
 sudo apt-get install default-jdk -y 1>/dev/null; echo "[Java] -> Установлено!"
