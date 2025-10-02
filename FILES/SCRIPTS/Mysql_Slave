@@ -4,14 +4,17 @@ IP_SLAVE="192.168.189.134"
 clear
 echo -e "$slash\nНастройка Mysql (slave)\n$slash"
 sleep 1s
+
 echo "Копирование конфигурации сети..."
 sudo cp -r ~/otus_project/FILES/netplan/50-cloud-init.yaml /etc/netplan/
 sleep 1s
 sudo sed -i "6s/ip/$(echo $IP_SLAVE)/g" /etc/netplan/50-cloud-init.yaml
 sudo netplan apply
 sleep 1s
+
 echo "Копирование конфигурации в mysql.conf.d..."
-sleep 1s; sudo systemctl enable mysql.service; sudo systemctl start mysql.service
+sleep 1s; sudo systemctl disable --now mysql.service
+sleep 1s; sudo systemctl enable --now mysql.service
 sudo cp ~/otus_project/FILES/mysql/mysqld.cnf /etc/mysql/mysql.conf.d/
 sleep 1s
 sudo sed -i "83s/OFF/ON/g" /etc/mysql/mysql.conf.d/mysqld.cnf
@@ -29,5 +32,5 @@ sleep 1s
 sudo mysql < ~/slave.sql
 
 echo -e "\n\nРеплика запущена в сторону $IP_SLAVE!\nОжидается перезагрузка..."
-read -rp "Нажмите любую клавишу для продолжения!"
-sleep 5s; sudo reboot
+#read -rp "Нажмите любую клавишу для продолжения!"
+#sleep 5s; sudo reboot

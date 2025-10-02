@@ -17,7 +17,8 @@ sudo sed -i "10s/ip/$(echo $IP_APACHE)/g" /var/www/html/index.html
 sleep 1s
 
 echo "Запуск служб Apache2..."
+sleep 1s; sudo systemctl disable apache2.service --now 1>/dev/null
 sleep 1s; sudo systemctl enable apache2.service --now 1>/dev/null
 echo -e "Готово! IP адрес сервера $(echo $IP_APACHE)\n\n\nApache2 настроен на порту 8080, 8081 и 8082!\nОжидается перезагрузка...\n$slash"
-read -rp "Нажмите любую клавишу для продолжения!"
-sleep 5s; sudo reboot
+#read -rp "Нажмите любую клавишу для продолжения!"
+#sleep 5s; sudo reboot

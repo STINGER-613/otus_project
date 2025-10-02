@@ -14,7 +14,8 @@ sudo cp -r ~/otus_project/FILES/nginx/default /etc/nginx/sites-available/
 sleep 1s
 
 echo "Запуск служб Nginx..."
-sleep 1s; sudo systemctl enable nginx.service; sudo systemctl start nginx.service
+sleep 1s; sudo systemctl disable nginx.service --now
+sleep 1s; sudo systemctl enable nginx.service --now
 echo -e "\n\nГотово! IP адрес сервера $(echo $IP_NGINX)\nNginx настроен!\nОжидается перезагрузка...\n$slash"
 read -rp "Нажмите любую клавишу для продолжения!"
 sleep 5s; sudo reboot

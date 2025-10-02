@@ -25,5 +25,5 @@ sudo cp ~/otus_project/FILES/logs/elasticsearch.yml /etc/elasticsearch/
 sleep 1s
 
 echo -e "\n\nГотово! IP адрес сервера $(echo $IP_LOGS)\n$slash"
-read -rp "Нажмите любую клавишу для продолжения!"
-sleep 5s; sudo reboot
+#read -rp "Нажмите любую клавишу для продолжения!"
+#sleep 5s; sudo reboot

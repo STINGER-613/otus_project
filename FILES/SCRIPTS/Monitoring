@@ -29,9 +29,10 @@ cd ~/
 wget https://mirrors.huaweicloud.com/grafana/12.1.1/grafana-enterprise_12.1.1_16903967602_linux_amd64.deb -P ~/
 echo -e "\n\nУстановка Grafana...\n"
 sleep 1; sudo apt-get install ~/grafana-enterprise_12.1.1_16903967602_linux_amd64.deb -y
+sleep 1s; sudo systemctl disable --now grafana-server.service 1>/dev/null
 sleep 1s; sudo systemctl enable --now grafana-server.service 1>/dev/null
 
 echo -e "\nУстановка завершена!\nСлужбы запущены!\nGrafana доступна по ссылке http://$(echo $IP_MON):3000\n"
 echo -e "Для импорта панели из файла .json требуется перейти по пути http://$(echo $IP_MON):3000/dashboard/import\n\n"
-read -rp "Нажмите любую клавишу для продолжения!"
-sleep 5s; sudo reboot
+#read -rp "Нажмите любую клавишу для продолжения!"
+#sleep 5s; sudo reboot
