@@ -31,6 +31,6 @@ sed -i "6s/pos/$(echo $r)/g" ~/slave.sql
 sleep 1s
 sudo mysql < ~/slave.sql
 
-echo -e "\n\nРеплика запущена в сторону $IP_SLAVE!\nОжидается перезагрузка..."
+echo -e "\n\nРеплика запущена в сторону 192.168.189.133!\nОжидается перезагрузка..."
 #read -rp "Нажмите любую клавишу для продолжения!"
 #sleep 5s; sudo reboot
