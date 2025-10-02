@@ -19,7 +19,7 @@ sudo cp ~/otus_project/FILES/monitoring/prometheus.yml /etc/prometheus
 sleep 1s
 
 echo "Запуск служб..."
-sleep 1s; sudo systemctl enable --now prometheus.service 
+sleep 1s; sudo systemctl enable --now prometheus.service
 echo -e "\n\nГотово! IP адрес $(echo $IP_MON)\nPrometheus настроен!\n$slash"
 
 echo "Установка компонентов мониторинга для Grafana..."
@@ -31,6 +31,9 @@ echo -e "\n\nУстановка Grafana...\n"
 sleep 1; sudo apt-get install ~/grafana-enterprise_12.1.1_16903967602_linux_amd64.deb -y
 sleep 1s; sudo systemctl disable --now grafana-server.service 1>/dev/null
 sleep 1s; sudo systemctl enable --now grafana-server.service 1>/dev/null
+
+echo "Настройка логирования..."
+~/otus_project/FILES/SCRIPTS/Logs
 
 echo -e "\nУстановка завершена!\nСлужбы запущены!\nGrafana доступна по ссылке http://$(echo $IP_MON):3000\n"
 echo -e "Для импорта панели из файла .json требуется перейти по пути http://$(echo $IP_MON):3000/dashboard/import\n\n"
