@@ -6,7 +6,7 @@ sleep 1s
 echo "Установка компонентов для логирования..."
 sleep 1s
 sudo apt-get install default-jdk -y 1>/dev/null; echo "[Java] -> Установлено!"
-sudo apt-get install ~/elasticsearch*.deb -y 1>/dev/null; echo "[Elasticsearch] -> Установлено!"
+sudo apt-get install ~/elasticsearch*.deb -y 1>/dev/null| grep "The generated password for the elastic";echo "[Elasticsearch] -> Установлено!"
 sudo apt-get install ~/filebeat*.deb -y 1>/dev/null; echo "[Filebeat] -> Установлено!"
 sudo apt-get install ~/kibana*.deb -y 1>/dev/null; echo "[Kibana] -> Установлено!"
 sudo apt-get install ~/logstash*.deb -y 1>/dev/null; echo "[Logstash] -> Установлено!"
@@ -23,3 +23,9 @@ sudo systemctl daemon-reload
 sudo systemctl enable --now elasticsearch.service 1>/dev/null; echo "[Elasticsearch]"
 echo "Смена пароля на Elasticsearch..."
 sudo /usr/share/elasticsearch/bin/elasticsearch-reset-password -u elastic -i
+echo "Запуск склужбы Kibana..."
+sudo cp ~/otus_project/FILES/logs/kibana.yml /etc/kibana/
+sudo systemctl enable --now kibana.service 1>/dev/null; echo "[Kibana]"
+echo "Генерация токена..."
+sudo /usr/share/elasticsearch/bin/elasticsearch-create-enrollment-token -s kibana
+
