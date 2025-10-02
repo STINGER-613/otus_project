@@ -18,7 +18,7 @@ sudo cp ~/otus_project/FILES/logs/elasticsearch.yml /etc/elasticsearch/
 echo -e "\n\nГотово! IP адрес сервера $(echo $IP_LOGS)\n$slash"
 read -rp "Нажмите любую клавишу для продолжения!"
 
-echo "Запуск служб..."
+echo "Запуск службы Elasticsearch..."
 sudo systemctl daemon-reload
 sudo systemctl enable --now elasticsearch.service 1>/dev/null; echo "[Elasticsearch]"
 echo "Смена пароля на Elasticsearch..."
@@ -26,6 +26,27 @@ sudo /usr/share/elasticsearch/bin/elasticsearch-reset-password -u elastic -i
 echo "Запуск склужбы Kibana..."
 sudo cp ~/otus_project/FILES/logs/kibana.yml /etc/kibana/
 sudo systemctl enable --now kibana.service 1>/dev/null; echo "[Kibana]"
+
+echo "Для продолжения следует открыть страницу: http://192.168.189.135:5601/"
+
 echo "Генерация токена..."
 sudo /usr/share/elasticsearch/bin/elasticsearch-create-enrollment-token -s kibana
+echo "Генерация кода авторизации..."
+sudo /usr/share/kibana/bin/kibana-verification-code
+echo "Копирование файлов для Logstash..."
+sudo cp  ~/otus_project/FILES/logs/logstash.yml /etc/logstash/
+sudo cp  ~/otus_project/FILES/logs/logstash-nginx-es.conf /etc/logstash/conf.d/
+sudo mkdir /etc/logstash/certs/
+sudo cp /etc/elasticsearch/certs/http_ca.crt /etc/logstash/certs/
+sudo chown -R logstash:logstash /etc/logstash/certs/
+echo "Запуск службы Logstash..."
+sudo systemctl enable --now logstash.service 1>/dev/null; echo "[Logstash]"
+echo "Копирование файлов для Filebeat..."
+sudo cp  ~/otus_project/FILES/logs/filebeat.yml /etc/filebeat/
+echo "Запуск службы Filebeat..."
+sudo systemctl enable --now filebeat.service 1>/dev/null; echo "[Filebeat]"
+curl http://localhost/ &>/dev/null
+curl http://localhost/123 $>/dev/null &>/dev/null
 
+echo "Готово!"
+read -rp "Нажмите любую клавишу для продолжения!"
