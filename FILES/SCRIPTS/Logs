@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 IP_LOGS="192.168.189.135"
 
-clear
 echo -e "$slash\nНастройка логирования...\n$slash"
 sleep 1s
 echo "Установка компонентов для логирования..."
@@ -16,8 +15,11 @@ echo "Копирование конфигураций..."
 sudo cp ~/otus_project/FILES/logs/jvm.options /etc/elasticsearch/jvm.options.d/
 sudo cp ~/otus_project/FILES/logs/elasticsearch.yml /etc/elasticsearch/
 
-sleep 1s
-
 echo -e "\n\nГотово! IP адрес сервера $(echo $IP_LOGS)\n$slash"
-#read -rp "Нажмите любую клавишу для продолжения!"
-#sleep 5s; sudo reboot
+read -rp "Нажмите любую клавишу для продолжения!"
+
+echo "Запуск служб..."
+sudo systemctl daemon-reload
+sudo systemctl enable --now elasticsearch.service 1>/dev/null; echo "[Elasticsearch]"
+echo "Смена пароля на Elasticsearch..."
+sudo /usr/share/elasticsearch/bin/elasticsearch-reset-password -u elastic -i
