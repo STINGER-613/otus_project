@@ -38,8 +38,7 @@ read -rp "Какая цель у сервера:
 2) Apache2 (backend)
 3) Mysql (master)
 4) Mysql (slave)
-5) Grafana (monitoring)
-6) Logs
+5) Monitoring + Logs
 
 -> " i
 
@@ -50,8 +49,6 @@ case $i in
 	3)~/otus_project/FILES/SCRIPTS/Mysql_Master;;
 	4)~/otus_project/FILES/SCRIPTS/Mysql_Slave;;
 	5)~/otus_project/FILES/SCRIPTS/Monitoring;;
-	6)~/otus_project/FILES/SCRIPTS/Logs;;
-	7)~/otus_project/FILES/SCRIPTS/;;
 
 	*) echo -e "Ошибка назначения!"; read -rp "Нажмите любую клавишу для продолжения!"; exit
 esac
