@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
-
+IP_NGINX="192.168.189.131"
 clear
 echo -e "$slash\nНастройка Nginx (frontend)\n$slash"
 sleep 1s
 echo "Копирование конфигурации сети..."
 sudo cp -r ~/otus_project/FILES/netplan/50-cloud-init.yaml /etc/netplan/
 sleep 1s
-sudo sed -i "6s/ip/192.168.189.131/g" /etc/netplan/50-cloud-init.yaml
+sudo sed -i "6s/ip/$(echo $IP_NGINX)/g" /etc/netplan/50-cloud-init.yaml
 sudo netplan apply
 sleep 1s
 echo "Копирование конфигурации nginx..."
@@ -15,6 +15,6 @@ sleep 1s
 
 echo "Запуск служб Nginx..."
 sleep 1s; sudo systemctl enable nginx.service; sudo systemctl start nginx.service
-echo -e "\n\nГотово! IP адрес сервера $(echo $q)\nNginx настроен!\nОжидается перезагрузка...\n$slash"
+echo -e "\n\nГотово! IP адрес сервера $(echo $IP_NGINX)\nNginx настроен!\nОжидается перезагрузка...\n$slash"
 read -rp "Нажмите любую клавишу для продолжения!"
 sleep 5s; sudo reboot

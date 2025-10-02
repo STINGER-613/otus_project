@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+IP_MON="192.168.189.135"
 
 clear
 echo -e "$slash\nНастройка Мониторинга (Grafana + Prometheus)\n$slash"
@@ -6,12 +7,12 @@ sleep 1s
 echo "Копирование конфигурации сети..."
 sudo cp -r ~/otus_project/FILES/netplan/50-cloud-init.yaml /etc/netplan/
 sleep 1s
-sudo sed -i "6s/ip/192.168.189.136/g" /etc/netplan/50-cloud-init.yaml
+sudo sed -i "6s/ip/$(echo $IP_MON)/g" /etc/netplan/50-cloud-init.yaml
 sudo netplan apply
 sleep 1s
 echo "Установка компонентов мониторинга для Prometheus..."
 sleep 1s
-sudo apt install prometheus -y
+sudo apt install prometheus -y 1>/dev/null;
 
 echo "Копирование конфигураций Prometheus..."
 sudo cp ~/otus_project/FILES/monitoring/prometheus.yml /etc/prometheus
@@ -19,7 +20,7 @@ sleep 1s
 
 echo "Запуск служб..."
 sleep 1s; sudo systemctl enable --now prometheus.service 
-echo -e "\n\nГотово! IP адрес сервера $(echo $IP)\nPrometheus настроен!\n$slash"
+echo -e "\n\nГотово! IP адрес $(echo $IP_MON)\nPrometheus настроен!\n$slash"
 
 echo "Установка компонентов мониторинга для Grafana..."
 sleep 1s
@@ -28,9 +29,9 @@ cd ~/
 wget https://mirrors.huaweicloud.com/grafana/12.1.1/grafana-enterprise_12.1.1_16903967602_linux_amd64.deb -P ~/
 echo -e "\n\nУстановка Grafana...\n"
 sleep 1; sudo apt-get install ~/grafana-enterprise_12.1.1_16903967602_linux_amd64.deb -y
-sleep 1s; sudo systemctl enable --now grafana-server.service
+sleep 1s; sudo systemctl enable --now grafana-server.service 1>/dev/null
 
-echo -e "\nУстановка завершена!\nСлужбы запущены!\nGrafana доступна по ссылке http://localhost:3000\n"
-echo -e "Для импорта панели из файла .json требуется перейти по пути http://localhost:3000/dashboard/import\n\n"
+echo -e "\nУстановка завершена!\nСлужбы запущены!\nGrafana доступна по ссылке http://$(echo $IP_MON):3000\n"
+echo -e "Для импорта панели из файла .json требуется перейти по пути http://$(echo $IP_MON):3000/dashboard/import\n\n"
 read -rp "Нажмите любую клавишу для продолжения!"
 sleep 5s; sudo reboot

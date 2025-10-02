@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+IP_LOGS="192.168.189.135"
 
 clear
 echo -e "$slash\nНастройка логирования...\n$slash"
@@ -6,7 +7,7 @@ sleep 1s
 echo "Копирование конфигурации сети..."
 sudo cp -r ~/otus_project/FILES/netplan/50-cloud-init.yaml /etc/netplan/
 sleep 1s
-sudo sed -i "6s/ip/192.168.189.135/g" /etc/netplan/50-cloud-init.yaml
+sudo sed -i "6s/ip/$(echo $IP_LOGS)/g" /etc/netplan/50-cloud-init.yaml
 sudo netplan apply
 sleep 1s
 echo "Установка компонентов для логирования..."
@@ -23,6 +24,6 @@ sudo cp ~/otus_project/FILES/logs/elasticsearch.yml /etc/elasticsearch/
 
 sleep 1s
 
-echo -e "\n\nГотово! IP адрес сервера $(echo $IP)\n$slash"
+echo -e "\n\nГотово! IP адрес сервера $(echo $IP_LOGS)\n$slash"
 read -rp "Нажмите любую клавишу для продолжения!"
 sleep 5s; sudo reboot

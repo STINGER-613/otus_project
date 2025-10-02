@@ -1,23 +1,23 @@
 #!/usr/bin/env bash
-
+IP_APACHE="192.168.189.132"
 clear
 echo -e "$slash\nНастройка Apache2 (backend)\n$slash"
 sleep 1s
 echo "Копирование конфигурации сети..."
 sudo cp -r ~/otus_project/FILES/netplan/50-cloud-init.yaml /etc/netplan/
 sleep 1s
-sudo sed -i "6s/ip/192.168.189.132/g" /etc/netplan/50-cloud-init.yaml
+sudo sed -i "6s/ip/$(echo $IP_APACHE)/g" /etc/netplan/50-cloud-init.yaml
 sudo netplan apply
 sleep 1s
 echo "Копирование конфигурации Apache2 и стартовой страници..."
 sudo cp -r ~/otus_project/FILES/apache2/000-default.conf /etc/apache2/sites-available/
 sudo cp -r ~/otus_project/FILES/apache2/index.html /var/www/html/
 sudo cp -r ~/otus_project/FILES/apache2/ports.conf /etc/apache2
-sudo sed -i "10s/ip/192.168.189.132/g" /var/www/html/index.html
+sudo sed -i "10s/ip/$(echo $IP_APACHE)/g" /var/www/html/index.html
 sleep 1s
 
 echo "Запуск служб Apache2..."
-sleep 1s; sudo systemctl enable apache2.service; sudo systemctl start apache2.service &>/dev/null
+sleep 1s; sudo systemctl enable apache2.service --now 1>/dev/null
 echo -e "Готово! IP адрес сервера $(echo $IP_APACHE)\n\n\nApache2 настроен на порту 8080, 8081 и 8082!\nОжидается перезагрузка...\n$slash"
 read -rp "Нажмите любую клавишу для продолжения!"
 sleep 5s; sudo reboot
