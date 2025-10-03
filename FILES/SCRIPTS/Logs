@@ -31,14 +31,18 @@ echo "Для продолжения следует открыть страниц
 
 echo "Генерация токена..."
 sudo /usr/share/elasticsearch/bin/elasticsearch-create-enrollment-token -s kibana
+read -rp "Нажмите любую клавишу для продолжения!"
 echo "Генерация кода авторизации..."
 sudo /usr/share/kibana/bin/kibana-verification-code
+read -rp "Нажмите любую клавишу для продолжения!"
+
 echo "Копирование файлов для Logstash..."
 sudo cp  ~/otus_project/FILES/logs/logstash.yml /etc/logstash/
 sudo cp  ~/otus_project/FILES/logs/logstash-nginx-es.conf /etc/logstash/conf.d/
 sudo mkdir /etc/logstash/certs/
 sudo cp /etc/elasticsearch/certs/http_ca.crt /etc/logstash/certs/
 sudo chown -R logstash:logstash /etc/logstash/certs/
+
 echo "Запуск службы Logstash..."
 sudo systemctl enable --now logstash.service 1>/dev/null; echo "[Logstash]"
 echo "Копирование файлов для Filebeat..."
