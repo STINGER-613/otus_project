@@ -8,20 +8,20 @@ clear
 echo -e "$slash\nОбновление...\n$slash"
 sudo apt-get update -y 1>/dev/null
 
-#clear
-#echo -e "$slash\nУстановка пакетов и их зависимостей...\n$slash"; sleep 2s
-#apt_tools=(git network-manager wget curl apache2 nginx mysql-server* net-tools iptables)
-#sudo systemctl disable apache2.service nginx.service mysql.service --now &>/dev/null
-#sudo systemctl stop apache2.service nginx.service mysql.service &>/dev/null
-#for i in ${apt_tools[@]}; do
-#	sudo apt-get install $i -y 1>/dev/null
-#	if [ $? -eq 0 ]; then
-#		echo "[$i] -> Установлено!"
-#	else
-#		echo "[$i] -> Не установлено!"
-#		sleep 2s; exit
-#	fi
-#done
+clear
+echo -e "$slash\nУстановка пакетов и их зависимостей...\n$slash"; sleep 2s
+apt_tools=(git network-manager wget curl apache2 nginx mysql-server* net-tools iptables)
+sudo systemctl disable apache2.service nginx.service mysql.service --now &>/dev/null
+sudo systemctl stop apache2.service nginx.service mysql.service &>/dev/null
+for i in ${apt_tools[@]}; do
+	sudo apt-get install $i -y 1>/dev/null
+	if [ $? -eq 0 ]; then
+		echo "[$i] -> Установлено!"
+	else
+		echo "[$i] -> Не установлено!"
+		sleep 2s; exit
+	fi
+done
 
 sleep 1s
 echo -e "\nComplite!\n$slash"
@@ -40,7 +40,7 @@ read -rp "Какая цель у сервера:
 3) Mysql (master)
 4) Mysql (slave)
 5) Monitoring + Logs
-6) All install
+
 -> " i
 
 echo $slash
@@ -50,10 +50,9 @@ case $i in
 	3)~/otus_project/FILES/SCRIPTS/Mysql_Master;;
 	4)~/otus_project/FILES/SCRIPTS/Mysql_Slave;;
 	5)~/otus_project/FILES/SCRIPTS/Monitoring;;
-	6)~/otus_project/FILES/SCRIPTS/Nginx
-	ping 192.168.189.132 -c 1 &>/dev/null; if [ $? -eq 0]; tnen
+	6)~/otus_project/FILES/SCRIPTS/Nginx;;
 
-	*) echo -e "Ошибка назначения!"; read -rp "Нажмите любую клавишу для продолжения!"; exit
+	*) echo -e "Ошибка назначения!"; read -rp "Нажмите любую клавишу для продолжения!"; exit;;
 esac
 
 
