@@ -45,12 +45,16 @@ sudo chown -R logstash:logstash /etc/logstash/certs/
 
 echo "Запуск службы Logstash..."
 sudo systemctl enable --now logstash.service 1>/dev/null; echo "[Logstash]"
-echo "Копирование файлов для Filebeat..."
-sudo cp  ~/otus_project/FILES/logs/filebeat.yml /etc/filebeat/
+
+echo "Копирование файлов для Filebeat на сервер 192.168.189.131 с Nginx..."
+sudo scp -r filebeat*.deb  qwe@192.168.189.131:/home/qwe
+ssh qwe@192.168.189.131 'sudo cp ~/otus_project/FILES/logs/filebeat.yml /etc/filebeat/'
+
 echo "Запуск службы Filebeat..."
-sudo systemctl enable --now filebeat.service 1>/dev/null; echo "[Filebeat]"
-curl http://localhost/ &>/dev/null
-curl http://localhost/123 $>/dev/null &>/dev/null
+ssh qwe@192.168.189.131 'sudo systemctl enable --now filebeat.service 1>/dev/null; echo "[Filebeat]"'
+curl http://192.168.189.131/123 $>/dev/null &>/dev/null
+curl http://192.168.189.131/123 $>/dev/null &>/dev/null
+curl http://192.168.189.131/123 $>/dev/null &>/dev/null
 
 echo "Готово!"
 read -rp "Нажмите любую клавишу для продолжения!"

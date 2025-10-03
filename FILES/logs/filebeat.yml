@@ -41,7 +41,7 @@ filebeat.inputs:
   prospector.scanner.exclude_files: ['.gz$']
 
 output.logstash:
-  hosts: ["localhost:5400"]
+  hosts: ["192.168.189.135:5400"]
 
   # Exclude lines. A list of regular expressions to match. It drops the lines that are
   # matching any regular expression from the list.
