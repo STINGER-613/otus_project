@@ -23,6 +23,8 @@ echo "Создание пользователя из файла конфигур
 sudo mysql < ~/otus_project/FILES/mysql/master.sql
 sudo systemctl disable --now  mysql.service 1>/dev/null
 sudo systemctl enable --now  mysql.service 1>/dev/null
+sudo systemctl restart mysql.service 1>/dev/null
+
 echo show master status | sudo mysql
 
 echo -e "\n\nПользователь создан!\nРеплика запущена!\n"

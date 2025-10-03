@@ -30,6 +30,7 @@ cp ~/otus_project/FILES/mysql/slave.sql ~/
 #sed -i "6s/pos/$(echo $r)/g" ~/slave.sql
 sleep 1s
 sudo mysql < ~/slave.sql
+sudo systemctl restart mysql.service 1>/dev/null
 
 echo -e "\n\nРеплика запущена в сторону 192.168.189.133!\n"
 read -rp "Нажмите любую клавишу для продолжения!"
