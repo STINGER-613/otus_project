@@ -50,7 +50,6 @@ case $i in
 	3)~/otus_project/FILES/SCRIPTS/Mysql_Master;;
 	4)~/otus_project/FILES/SCRIPTS/Mysql_Slave;;
 	5)~/otus_project/FILES/SCRIPTS/Monitoring;;
-	6)~/otus_project/FILES/SCRIPTS/Nginx;;
 
 	*) echo -e "Ошибка назначения!"; read -rp "Нажмите любую клавишу для продолжения!"; exit;;
 esac
