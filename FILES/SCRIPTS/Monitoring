@@ -24,10 +24,10 @@ echo -e "\n\nГотово! IP адрес $(echo $IP_MON)\nPrometheus настр�
 
 echo "Установка компонентов мониторинга для Grafana..."
 sleep 1s
-echo "Скачивание 'deb' пакета версии 12.1.1..."
+#echo "Скачивание 'deb' пакета версии 12.1.1..."
 cd ~/
-wget https://mirrors.huaweicloud.com/grafana/12.1.1/grafana-enterprise_12.1.1_16903967602_linux_amd64.deb -P ~/
-echo -e "\n\nУстановка Grafana...\n"
+#wget https://mirrors.huaweicloud.com/grafana/12.1.1/grafana-enterprise_12.1.1_16903967602_linux_amd64.deb -P ~/
+#echo -e "\n\nУстановка Grafana...\n"
 sleep 1; sudo apt-get install ~/grafana*.deb -y 1>/dev/null
 sleep 1s; sudo systemctl disable --now grafana-server.service 1>/dev/null
 sleep 1s; sudo systemctl enable --now grafana-server.service 1>/dev/null
