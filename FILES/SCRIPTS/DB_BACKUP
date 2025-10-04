@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+# Перечень переменных
+source="192.168.189.133"
+user="otus"
+pass="qwe123"
+dir_name="tables_backup"
+
+# Поиск баз данных
+bases_list=$(mysql -u"$user" -h"$source" -p"$pass" -N -e 'show databases' 2>/dev/null)
+
+# Создание папок под каждую базу и таблицу с нужным именем
+for bl in $bases_list; do
+	tables_list=$(mysql -u"$user" -h"$source" -p"$pass" -N -e "show tables from $bl" 2>/dev/null)
+	mkdir -p ~/$dir_name/$bl
+	for tl in $tables_list; do
+		mysqldump -u"$user" -h"$source" -p"$pass" --source-data --add-drop-table --add-locks --create-options --disable-keys --extended-insert --single-transaction --quick --set-charset --events --routines --triggers $bl $tl 2>/dev/null | gzip -1 > ~/$dir_name/$bl/$tl.gz
+	done
+done
