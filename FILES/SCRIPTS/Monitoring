@@ -36,5 +36,4 @@ echo -e "\nУстановка завершена!\nСлужбы запущены
 echo -e "Для импорта панели из файла .json требуется перейти по пути http://$(echo $IP_MON):3000/dashboard/import\n\n"
 read -rp "Нажмите любую клавишу для продолжения!"
 
-echo -e "$slash\nНастройка логирования...\n$slash"
 ~/otus_project/FILES/SCRIPTS/Logs
