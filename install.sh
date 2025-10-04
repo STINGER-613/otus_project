@@ -54,7 +54,7 @@ case $i in
 	4)~/otus_project/FILES/SCRIPTS/Mysql_Slave;;
 	5)~/otus_project/FILES/SCRIPTS/Monitoring;;
 	6)echo "Копирование файла DB_BACKUP...";sleep 1s; cp otus_project/FILES/SCRIPTS/DB_BACKUP ~/.DB_BACKUP
-	echo "Добавление правила в CRON..."; sleep 1s; crontab otus_project/FILES/cron/mysql.back
+	echo "Добавление правила в CRON..."; sleep 1s; crontab ~/otus_project/FILES/cron/mysql.back
 	echo "Готово!"; sleep 1s;read -rp "Нажмите любую клавишу для продолжения!"; exit;;
 
 	*) echo -e "Ошибка назначения!"; sleep 1s; read -rp "Нажмите любую клавишу для продолжения!"; exit;;
