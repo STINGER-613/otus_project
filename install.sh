@@ -42,6 +42,7 @@ read -rp "Какая цель у сервера:
 3) Mysql (master)
 4) Mysql (slave)
 5) Monitoring + Logs
+6) Cron SQL
 
 -> " i
 
@@ -52,8 +53,11 @@ case $i in
 	3)~/otus_project/FILES/SCRIPTS/Mysql_Master;;
 	4)~/otus_project/FILES/SCRIPTS/Mysql_Slave;;
 	5)~/otus_project/FILES/SCRIPTS/Monitoring;;
+	6)echo "Копирование файла DB_BACKUP...";sleep 1s; cp otus_project/FILES/SCRIPTS/DB_BACKUP ~/.DB_BACKUP
+	echo "Добавление правила в CRON..."; sleep 1s; crontab otus_project/FILES/cron/mysql.back
+	echo "Готово!"; sleep 1s;read -rp "Нажмите любую клавишу для продолжения!"; exit;;
 
-	*) echo -e "Ошибка назначения!"; read -rp "Нажмите любую клавишу для продолжения!"; exit;;
+	*) echo -e "Ошибка назначения!"; sleep 1s; read -rp "Нажмите любую клавишу для продолжения!"; exit;;
 esac
 
 
