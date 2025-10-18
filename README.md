@@ -22,6 +22,7 @@
 3) Mysql (master)
 4) Mysql (slave)
 5) Monitoring + Logs
+6) DB_BACKUP
 ------------------------
 
 Описание скриптаов:
@@ -60,6 +61,7 @@
 
 
  
+
 
 
 
